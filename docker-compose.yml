@@ -1,0 +1,39 @@
+# version attribute removed to avoid warnings
+
+# This docker-compose file sets up three deployment environments: dev, staging, and prod.
+# Each service uses the exact same build image, but we pass in a different APP_ENV 
+# environment variable to control the deployment environment context.
+
+services:
+  dev:
+    build: .
+    ports:
+      # Maps host port 8000 to container port 8080
+      - "8000:8080"
+    environment:
+      # Control deployment environment (development)
+      - APP_ENV=development
+    env_file:
+      - .env
+
+  staging:
+    build: .
+    ports:
+      # Maps host port 8081 to container port 8080
+      - "8081:8080"
+    environment:
+      # Control deployment environment (staging)
+      - APP_ENV=staging
+    env_file:
+      - .env
+
+  prod:
+    build: .
+    ports:
+      # Maps host port 8082 to container port 8080
+      - "8082:8080"
+    environment:
+      # Control deployment environment (production)
+      - APP_ENV=production
+    env_file:
+      - .env
