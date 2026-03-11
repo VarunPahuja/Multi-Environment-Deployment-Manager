@@ -1,51 +1,85 @@
 # Multi-Environment Deployment Manager
 
-A minimal but production-style DevOps project demonstrating key DevOps principles including multi-environment configuration, containerization, CI/CD, orchestration, and monitoring.
+## 1. Project Overview
+The **Multi-Environment Deployment Manager** is a production-style DevOps project designed to demonstrate automated deployments across development, staging, and production environments. It showcases how a single, reproducible build artifact can be deployed with different configurations depending on the target environment, embodying key principles of modern software delivery.
 
-## Project Structure
+## 2. Architecture
+The project follows a standard CI/CD workflow:
 
-This project is organized to showcase a standard DevOps lifecycle:
+**Developer** → **GitHub** → **CI/CD Pipeline** → **Docker Containers** → **Environments**
 
-```
+1. Code changes are pushed to the GitHub repository.
+2. The CI/CD pipeline intercepts the push, running linting and building the Docker image.
+3. The resulting Docker image is run as containers across the different environments (Dev, Staging, Prod).
+
+## 3. Tech Stack
+This project leverages the following technologies:
+- **Python / Flask**: The core web application framework.
+- **Docker**: For containerizing the application.
+- **Docker Compose**: For orchestrating the multi-environment setup locally.
+- **GitHub Actions**: For the Continuous Integration and Continuous Deployment (CI/CD) pipeline.
+- **Kubernetes**: For production-grade container orchestration.
+
+## 4. Project Structure
+```text
 .
 ├── .github/
 │   └── workflows/
-│       └── cicd.yml           # CI/CD Pipeline: Automates testing, linting, and Docker image builds on push/PR.
+│       └── cicd.yml           # CI/CD Pipeline definition for GitHub Actions.
 ├── infrastructure/
 │   └── kubernetes/
-│       ├── deployment.yaml    # Container Orchestration: Defines the desired state (2 replicas) for high availability.
-│       └── service.yaml       # Networking: Exposes the deployment to handle incoming traffic on port 8080.
+│       ├── deployment.yaml    # Defines the Kubernetes Deployment (replicas, image, etc.).
+│       └── service.yaml       # Defines the Kubernetes Service to expose the application.
 ├── monitoring/
-│   └── README.md              # Observability: Documentation on how to monitor health, CPU, and latency.
+│   └── README.md              # Documentation placeholder for monitoring solutions.
 ├── src/
-│   └── app.py                 # Application Code: A simple Flask API with a / health check endpoint.
-├── .env                       # Environment Variables: Base configuration (empty by default).
-├── docker-compose.yml         # Local Environment Management: Spins up dev, staging, and prod simultaneously.
-├── Dockerfile                 # Containerization: Packages the Flask app and its dependencies into a reproducible image.
-└── requirements.txt           # Dependency Management: Pins Python dependencies (Flask) for consistent builds.
+│   └── app.py                 # The main Flask application source code.
+├── .env                       # Base environment variables file.
+├── docker-compose.yml         # Local orchestration for dev, staging, and prod environments.
+├── Dockerfile                 # Instructions for building the application's Docker image.
+└── requirements.txt           # Python dependency list.
 ```
 
-## How to Run Locally
-
-You can run this project locally using Docker Compose, which will spin up three separate environments (Development, Staging, Production) simultaneously from the exact same Docker image, demonstrating the principle of **build once, deploy anywhere**.
-
-1. Ensure Docker Desktop is running.
-2. Run the following command in the project root:
+## 5. Installation
+To run this project locally, clone the repository and use Docker Compose:
 
 ```bash
+git clone <repository-url>
+cd "Multi-Environment Deployment Manager"
 docker-compose up --build
 ```
 
-Access the environments at:
-- **Dev**: [http://localhost:8000/](http://localhost:8000/) *(Port changed from 8080 to avoid conflicts)*
+## 6. Usage
+Once the containers are running via Docker Compose, you can access the application's different environments on their respective ports. Each environment runs the exact same code but behaves differently based on injected environment variables.
+
+- **Development**: [http://localhost:8080/](http://localhost:8080/)
 - **Staging**: [http://localhost:8081/](http://localhost:8081/)
-- **Prod**: [http://localhost:8082/](http://localhost:8082/)
+- **Production**: [http://localhost:8082/](http://localhost:8082/)
 
-Check the health endpoints (e.g., [http://localhost:8000/health](http://localhost:8000/health)).
+*Note: You can also verify the health of each service by visiting `/health` on any of these ports.*
 
-## DevOps Principles Demonstrated
+## 7. CI/CD Pipeline
+The automated build process is defined in `.github/workflows/cicd.yml`. It is triggered automatically on pushes and pull requests to the `main` branch. The pipeline:
+1. Checks out the source code.
+2. Sets up the Python environment.
+3. Installs necessary dependencies.
+4. Runs `flake8` to enforce code quality and linting standards.
+5. Builds the Docker image (`devopsproject:latest`).
+6. Prints a success message upon completion.
 
-1. **Configuration Management / Environment Parity:** The `app.py` behaves differently based on the `APP_ENV` environment variable, while using the exact same underlying `devopsproject:latest` image.
-2. **Infrastructure as Code (IaC):** The Kubernetes `.yaml` files define the infrastructure declaratively.
-3. **Continuous Integration / Continuous Deployment (CI/CD):** GitHub Actions automatically lint the code and build the image whenever changes are made to the `main` branch.
-4. **Observability:** The `/health` endpoint and monitoring documentation provide a foundation for understanding application state in production.
+## 8. Kubernetes Deployment
+For production scale, this project includes Kubernetes manifests in the `infrastructure/kubernetes/` directory:
+- **`deployment.yaml`**: Ensures that 2 replicas of the `devopsproject:latest` container are running for high availability, labeling them as `app: devops-app`.
+- **`service.yaml`**: Exposes the deployment using a LoadBalancer on port `8080`, routing incoming traffic to the appropriate pods.
+
+## 9. Monitoring
+The `monitoring/` directory contains a placeholder explaining how to implement monitoring for this application. It details how tools like **Nagios** or **Prometheus** can be used to track:
+- Container health (via the `/health` endpoint).
+- CPU and Memory usage.
+- Request latency and traffic patterns.
+
+## 10. Learning Outcomes
+By exploring this project, you will gain hands-on experience with:
+- **DevOps automation**: Linking code changes to automated builds.
+- **Container orchestration**: Managing multiple environments with Docker Compose and scaling with Kubernetes.
+- **CI/CD workflows**: Implementing automated linting and image building using GitHub Actions.
