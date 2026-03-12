@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="bg-[#0f1115] text-gray-300 font-mono min-h-screen relative overflow-x-hidden">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 cyber-grid opacity-20 pointer-events-none z-0"></div>
+
+    <div class="relative z-10" x-data="dashboard()">
+        <!-- Top Nav -->
+        <header class="border-b border-gray-800 bg-[#161b22]/80 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center space-x-4">
+                        <div class="text-neon-cyan font-bold text-xl tracking-wider flex items-center gap-2">
+                            <span class="animate-pulse">>_</span> COMMAND_CENTER
+                        </div>
+                        <div class="text-xs text-gray-500 uppercase tracking-widest hidden sm:block border-l border-gray-700 pl-4 ml-2">
+                            Multi-Environment Deployment Manager
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 items-center">
+                        <!-- Live Traffic Counter -->
+                        <div class="hidden md:flex items-center text-xs bg-[#0d1117] px-3 py-1 rounded border border-cyan-900 shadow-[0_0_8px_rgba(34,211,238,0.2)]">
+                            <div class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse mr-2"></div>
+                            <span class="text-gray-400 mr-2">LIVE TRAFFIC:</span>
+                            <span class="text-cyan-400 font-bold tracking-widest" x-text="liveTraffic + ' REQ'"></span>
+                        </div>
+                        <div class="text-xs bg-gray-800 px-3 py-1 rounded-full text-gray-400 mr-2 border border-gray-700">
+                            Host: <span class="text-white" x-text="'{{ current_env }}'.toUpperCase()"></span>
+                        </div>
+                        <a href="/" class="text-cyan-400 border-b-2 border-cyan-400 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <a href="/logs" class="text-gray-400 hover:text-cyan-400 px-3 py-2 text-sm font-medium transition-colors">Logs</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- SECTION 1: ENVIRONMENT PIPELINE -->
+            <div class="mb-12">
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2 mb-6 border-b border-gray-800 pb-2">
+                    <span class="animate-pulse">>_</span> ENVIRONMENT PIPELINE
+                </h2>
+                <div class="flex items-center justify-between bg-[#161b22] border border-gray-800 rounded-lg p-8 relative">
+                    <!-- Dev -->
+                    <div class="flex-1 text-center flex flex-col items-center">
+                        <div class="inline-block bg-[#0d1117] border border-cyan-800/50 rounded-lg p-6 w-full max-w-[250px] relative">
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Development</h3>
+                            <div class="flex items-center justify-center gap-2 mb-2">
+                                <div class="w-2 h-2 rounded-full" :class="getStatusColor(environments.dev?.status, true)"></div>
+                                <span class="text-sm font-bold uppercase tracking-wide" :class="getTextColor(environments.dev?.status)" x-text="environments.dev?.status === 'healthy' ? 'RUNNING' : (environments.dev?.status === 'deploying' ? 'DEPLOYING...' : (environments.dev?.status === 'restarting' ? 'RESTARTING...' : 'ERROR'))"></span>
+                            </div>
+                            <div class="text-xs text-gray-500 font-mono" x-text="'Version: ' + (environments.dev?.version || 'v1.0')"></div>
+                        </div>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="text-gray-600 px-4">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                    <!-- Staging -->
+                    <div class="flex-1 text-center flex flex-col items-center">
+                        <div class="inline-block bg-[#0d1117] border border-purple-800/50 rounded-lg p-6 w-full max-w-[250px] relative">
+                            <h3 class="text-lg font-bold text-purple-400 mb-2">Staging</h3>
+                            <div class="flex items-center justify-center gap-2 mb-2">
+                                <div class="w-2 h-2 rounded-full" :class="getStatusColor(environments.staging?.status, true)"></div>
+                                <span class="text-sm font-bold uppercase tracking-wide" :class="getTextColor(environments.staging?.status)" x-text="environments.staging?.status === 'healthy' ? 'RUNNING' : (environments.staging?.status === 'deploying' ? 'DEPLOYING...' : (environments.staging?.status === 'restarting' ? 'RESTARTING...' : 'ERROR'))"></span>
+                            </div>
+                            <div class="text-xs text-gray-500 font-mono" x-text="'Version: ' + (environments.staging?.version || 'v1.0')"></div>
+                        </div>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="text-gray-600 px-4">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                    <!-- Prod -->
+                    <div class="flex-1 text-center flex flex-col items-center">
+                        <div class="inline-block bg-[#0d1117] border border-green-800/50 rounded-lg p-6 w-full max-w-[250px] relative">
+                            <h3 class="text-lg font-bold text-green-400 mb-2">Production</h3>
+                            <div class="flex items-center justify-center gap-2 mb-2">
+                                <div class="w-2 h-2 rounded-full" :class="getStatusColor(environments.prod?.status, true)"></div>
+                                <span class="text-sm font-bold uppercase tracking-wide" :class="getTextColor(environments.prod?.status)" x-text="environments.prod?.status === 'healthy' ? 'RUNNING' : (environments.prod?.status === 'deploying' ? 'DEPLOYING...' : (environments.prod?.status === 'restarting' ? 'RESTARTING...' : 'ERROR'))"></span>
+                            </div>
+                            <div class="text-xs text-gray-500 font-mono" x-text="'Version: ' + (environments.prod?.version || 'v1.0')"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+                <!-- SECTION 3: DEPLOYMENT CONTROLS -->
+                <div class="lg:col-span-1">
+                    <div class="bg-[#161b22] border border-gray-800 rounded-lg p-6 h-full">
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 border-b border-gray-800 pb-2">Deployment Workflow</h3>
+                        <div class="space-y-6 text-sm text-gray-300 mt-6">
+                            <div class="flex items-start gap-3">
+                                <span class="text-cyan-400 font-bold border border-cyan-800/50 bg-cyan-900/30 rounded px-2 py-0.5">1</span>
+                                <p>Developers deploy new code into <span class="text-cyan-400">Development</span>.</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-purple-400 font-bold border border-purple-800/50 bg-purple-900/30 rounded px-2 py-0.5">2</span>
+                                <p>After testing, the code is promoted to <span class="text-purple-400">Staging</span>.</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-green-400 font-bold border border-green-800/50 bg-green-900/30 rounded px-2 py-0.5">3</span>
+                                <p>Once verified, it is deployed to <span class="text-green-400">Production</span>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: ENVIRONMENT STATUS -->
+                <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- DEV CARD -->
+                    <div class="bg-[#161b22] border-t-2 border-t-cyan-500 border-l border-r border-b border-gray-800 rounded-lg p-6 flex flex-col justify-between group hover:border-cyan-500/30 transition-colors">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1">DEVELOPMENT</h3>
+                            <div class="text-xs text-gray-500 font-mono mb-4">Container: dev</div>
+                            <div class="space-y-2 mb-6 text-sm">
+                                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                    <span class="text-gray-400">Status</span>
+                                    <div class="flex items-center gap-2">
+                                        <svg x-show="environments.dev?.status === 'deploying' || environments.dev?.status === 'restarting'" class="animate-spin h-3 w-3" :class="getTextColor(environments.dev?.status)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                        <span class="font-bold" :class="getTextColor(environments.dev?.status)" x-text="environments.dev?.status === 'healthy' ? 'Running' : (environments.dev?.status === 'deploying' ? 'Deploying...' : (environments.dev?.status === 'restarting' ? 'Restarting...' : 'Error'))"></span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                    <span class="text-gray-400">Version</span>
+                                    <span class="text-white font-mono" x-text="environments.dev?.version || '--'"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <button @click="action('dev', 'deploy')" :disabled="environments.dev?.status !== 'healthy'" class="w-full bg-cyan-900/30 hover:bg-cyan-800/50 text-cyan-400 text-xs font-bold py-2 px-4 rounded border border-cyan-800/50 transition-all disabled:opacity-50">
+                                [Deploy to Staging]
+                            </button>
+                            <button @click="action('dev', 'restart')" :disabled="environments.dev?.status !== 'healthy'" class="w-full bg-[#0d1117] hover:bg-gray-800 text-gray-300 text-xs font-bold py-2 px-4 rounded border border-gray-700 transition-all disabled:opacity-50">
+                                [Restart Environment]
+                            </button>
+                            <a :href="'http://localhost:' + getPort('dev') + '/logs'" target="_blank" class="block w-full text-center bg-[#0d1117] hover:bg-gray-800 text-gray-500 text-xs font-bold py-2 px-4 rounded border border-gray-800 transition-all shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]">
+                                [View Logs]
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- STAGING CARD -->
+                    <div class="bg-[#161b22] border-t-2 border-t-purple-500 border-l border-r border-b border-gray-800 rounded-lg p-6 flex flex-col justify-between group hover:border-purple-500/30 transition-colors">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1">STAGING</h3>
+                            <div class="text-xs text-gray-500 font-mono mb-4">Container: staging</div>
+                            <div class="space-y-2 mb-6 text-sm">
+                                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                    <span class="text-gray-400">Status</span>
+                                    <div class="flex items-center gap-2">
+                                        <svg x-show="environments.staging?.status === 'deploying' || environments.staging?.status === 'restarting'" class="animate-spin h-3 w-3" :class="getTextColor(environments.staging?.status)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                        <span class="font-bold" :class="getTextColor(environments.staging?.status)" x-text="environments.staging?.status === 'healthy' ? 'Running' : (environments.staging?.status === 'deploying' ? 'Deploying...' : (environments.staging?.status === 'restarting' ? 'Restarting...' : 'Error'))"></span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                    <span class="text-gray-400">Version</span>
+                                    <span class="text-white font-mono" x-text="environments.staging?.version || '--'"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <button @click="action('staging', 'deploy')" :disabled="environments.staging?.status !== 'healthy'" class="w-full bg-purple-900/30 hover:bg-purple-800/50 text-purple-400 text-xs font-bold py-2 px-4 rounded border border-purple-800/50 transition-all disabled:opacity-50">
+                                [Deploy to Production]
+                            </button>
+                            <button @click="action('staging', 'restart')" :disabled="environments.staging?.status !== 'healthy'" class="w-full bg-[#0d1117] hover:bg-gray-800 text-gray-300 text-xs font-bold py-2 px-4 rounded border border-gray-700 transition-all disabled:opacity-50">
+                                [Restart Environment]
+                            </button>
+                            <a :href="'http://localhost:' + getPort('staging') + '/logs'" target="_blank" class="block w-full text-center bg-[#0d1117] hover:bg-gray-800 text-gray-500 text-xs font-bold py-2 px-4 rounded border border-gray-800 transition-all shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]">
+                                [View Logs]
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- PROD CARD -->
+                    <div class="bg-[#161b22] border-t-2 border-t-green-500 border-l border-r border-b border-gray-800 rounded-lg p-6 flex flex-col justify-between group hover:border-green-500/30 transition-colors">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1">PRODUCTION</h3>
+                            <div class="text-xs text-gray-500 font-mono mb-4">Container: prod</div>
+                            <div class="space-y-2 mb-6 text-sm">
+                                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                    <span class="text-gray-400">Status</span>
+                                    <div class="flex items-center gap-2">
+                                        <svg x-show="environments.prod?.status === 'deploying' || environments.prod?.status === 'restarting'" class="animate-spin h-3 w-3" :class="getTextColor(environments.prod?.status)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                        <span class="font-bold" :class="getTextColor(environments.prod?.status)" x-text="environments.prod?.status === 'healthy' ? 'Running' : (environments.prod?.status === 'deploying' ? 'Deploying...' : (environments.prod?.status === 'restarting' ? 'Restarting...' : 'Error'))"></span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                    <span class="text-gray-400">Version</span>
+                                    <span class="text-white font-mono" x-text="environments.prod?.version || '--'"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <button @click="action('prod', 'restart')" :disabled="environments.prod?.status !== 'healthy'" class="w-full bg-[#0d1117] hover:bg-gray-800 text-gray-300 text-xs font-bold py-2 px-4 rounded border border-gray-700 transition-all disabled:opacity-50">
+                                [Restart Environment]
+                            </button>
+                            <a :href="'http://localhost:' + getPort('prod') + '/logs'" target="_blank" class="block w-full text-center bg-[#0d1117] hover:bg-gray-800 text-gray-500 text-xs font-bold py-2 px-4 rounded border border-gray-800 transition-all shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]">
+                                [View Logs]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: DEPLOYMENT HISTORY -->
+            <div>
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2 mb-4 border-b border-gray-800 pb-2">
+                    <span class="animate-pulse">>_</span> DEPLOYMENT HISTORY
+                </h2>
+                <div class="bg-black border border-gray-800 rounded-lg p-6 font-mono text-sm relative group">
+                    <div class="flex justify-between items-center mb-4 border-b border-gray-800 pb-2">
+                        <span class="text-gray-500">~/system/history.log</span>
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="h-64 overflow-y-auto space-y-2 pr-2 custom-scrollbar" id="terminal-output">
+                        <template x-if="deployments.length === 0">
+                            <div class="text-gray-600 italic">No historical deployment activity...</div>
+                        </template>
+                        <template x-for="(dep, index) in deployments" :key="index">
+                            <div class="flex items-start gap-4 hover:bg-gray-900/50 p-1.5 rounded transition-colors group/item">
+                                <span class="text-gray-600 whitespace-nowrap" x-text="dep.timestamp_local || (dep.timestamp ? dep.timestamp.split(' ')[1] : '')"></span>
+                                <span class="text-cyan-500">—</span>
+                                <span class="text-gray-300" x-text="dep.message || `${dep.action || 'Event'} triggered in ${dep.env}`"></span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='dashboard.js') }}?v=3"></script>
+</body>
+</html>
