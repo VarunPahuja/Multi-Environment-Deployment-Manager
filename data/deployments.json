@@ -1,5 +1,17 @@
 [
     {
+        "env": "dev",
+        "version": "v1.0",
+        "message": "Development container restarted",
+        "timestamp": "2026-03-12T05:05:23.214723+00:00"
+    },
+    {
+        "env": "staging",
+        "version": "v1.5",
+        "message": "Deployment promoted to Staging",
+        "timestamp": "2026-03-12T05:03:44.149540+00:00"
+    },
+    {
         "env": "prod",
         "version": "v1.0",
         "message": "Production container restarted",

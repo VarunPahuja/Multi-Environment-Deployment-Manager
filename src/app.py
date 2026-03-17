@@ -130,7 +130,11 @@ def api_restart(env):
         app.logger.info(f"[INFO] Container restarted -> {env}")
         
         if docker_client:
-            container = docker_client.containers.get(f"multi-environmentdeploymentmanager-{env}-1")
+            containers = docker_client.containers.list(filters={"label": f"com.docker.compose.service={env}"})
+            if not containers:
+                return jsonify({"status": "error", "message": f"Couldn't find container for env: {env}"}), 404
+            
+            container = containers[0]
             container.restart()
             return jsonify({"status": "success", "message": f"Restarted {env}"})
         else:
@@ -156,7 +160,11 @@ def api_deploy(env):
         record_deployment(env, ver, msg)
         
         if docker_client:
-            container = docker_client.containers.get(f"multi-environmentdeploymentmanager-{env}-1")
+            containers = docker_client.containers.list(filters={"label": f"com.docker.compose.service={env}"})
+            if not containers:
+                return jsonify({"status": "error", "message": f"Couldn't find container for env: {env}"}), 404
+            
+            container = containers[0]
             container.restart()
             app.logger.info(f"[INFO] Deployment completed -> {env}")
             return jsonify({"status": "success", "message": f"Deployed to {env}"})
