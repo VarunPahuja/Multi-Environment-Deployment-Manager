@@ -18033,3 +18033,98 @@
 2026-03-12 05:06:11,719 [INFO] Serving dashboard index
 2026-03-12 05:06:18,287 [INFO] Serving dashboard index
 2026-03-12 05:06:50,081 [INFO] Serving dashboard index
+2026-03-17 06:14:46,931 [INFO] Starting production environment on port 8080
+2026-03-17 06:15:59,107 [INFO] Starting production environment on port 8080
+2026-03-17 06:21:21,688 [INFO] Starting production environment on port 8080
+2026-03-18 10:50:24,897 [INFO] Starting production environment on port 8080
+2026-03-18 10:51:54,560 [INFO] Starting production environment on port 8080
+2026-03-18 10:58:09,976 [INFO] Starting production environment on port 8080
+2026-03-18 11:26:09,660 [INFO] Received request: GET /
+2026-03-18 11:26:09,661 [INFO] Serving dashboard index
+2026-03-18 11:26:09,799 [INFO] Received request: GET /static/styles.css
+2026-03-18 11:26:09,802 [INFO] Received request: GET /static/dashboard.js
+2026-03-18 11:26:10,241 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:12,174 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:13,357 [INFO] Received request: GET /
+2026-03-18 11:26:13,358 [INFO] Serving dashboard index
+2026-03-18 11:26:13,429 [INFO] Received request: GET /static/dashboard.js
+2026-03-18 11:26:13,432 [INFO] Received request: GET /static/styles.css
+2026-03-18 11:26:13,746 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:15,750 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:17,663 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:19,599 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:21,505 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:23,425 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:25,438 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:27,301 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:29,277 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:31,170 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:34,455 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:36,382 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:38,313 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:40,254 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:42,162 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:44,080 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:46,015 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:47,921 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:49,951 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:51,860 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:53,835 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:55,711 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:57,629 [INFO] Received request: GET /api/deployments
+2026-03-18 11:26:59,570 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:01,493 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:04,848 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:06,786 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:08,747 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:10,666 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:12,604 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:14,495 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:16,354 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:18,218 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:20,174 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:22,119 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:24,063 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:25,989 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:27,924 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:29,847 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:31,792 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:33,724 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:37,069 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:39,018 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:40,946 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:42,872 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:44,804 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:46,716 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:48,783 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:50,599 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:52,522 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:54,465 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:56,382 [INFO] Received request: GET /api/deployments
+2026-03-18 11:27:58,326 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:00,243 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:02,160 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:04,098 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:07,355 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:09,307 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:11,248 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:13,176 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:14,950 [INFO] Received request: POST /api/restart/dev
+2026-03-18 11:28:14,971 [INFO] [INFO] Container restarted -> dev
+2026-03-18 11:28:15,094 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:15,132 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:17,038 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:19,522 [INFO] Received request: POST /api/restart/staging
+2026-03-18 11:28:19,540 [INFO] [INFO] Container restarted -> staging
+2026-03-18 11:28:19,560 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:19,652 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:21,457 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:23,526 [INFO] Received request: POST /api/restart/prod
+2026-03-18 11:28:23,561 [INFO] [INFO] Container restarted -> prod
+2026-03-18 11:28:23,615 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:23,680 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:25,464 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:27,336 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:29,311 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:31,216 [INFO] Received request: GET /api/deployments
+2026-03-18 11:28:33,129 [INFO] Received request: GET /api/deployments

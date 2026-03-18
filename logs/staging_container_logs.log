@@ -11485,3 +11485,48 @@
 2026-03-12 03:48:16,601 [INFO] Serving dashboard index
 2026-03-12 05:02:52,094 [INFO] Starting staging environment on port 8080
 2026-03-12 05:03:56,070 [INFO] Starting staging environment on port 8080
+2026-03-17 06:14:46,904 [INFO] Starting staging environment on port 8080
+2026-03-17 06:15:59,040 [INFO] Starting staging environment on port 8080
+2026-03-17 06:21:21,826 [INFO] Starting staging environment on port 8080
+2026-03-18 10:50:24,896 [INFO] Starting staging environment on port 8080
+2026-03-18 10:52:41,025 [INFO] Starting staging environment on port 8080
+2026-03-18 10:54:26,702 [INFO] Received request: GET /
+2026-03-18 10:54:26,702 [INFO] Serving dashboard index
+2026-03-18 10:54:26,770 [INFO] Received request: GET /
+2026-03-18 10:54:26,771 [INFO] Serving dashboard index
+2026-03-18 10:58:09,910 [INFO] Starting staging environment on port 8080
+2026-03-18 11:23:06,670 [INFO] Received request: GET /
+2026-03-18 11:23:06,671 [INFO] Serving dashboard index
+2026-03-18 11:23:06,779 [INFO] Received request: GET /static/styles.css
+2026-03-18 11:23:06,781 [INFO] Received request: GET /static/dashboard.js
+2026-03-18 11:23:07,134 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:09,257 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:10,779 [INFO] Received request: GET /
+2026-03-18 11:23:10,779 [INFO] Serving dashboard index
+2026-03-18 11:23:10,852 [INFO] Received request: GET /static/dashboard.js
+2026-03-18 11:23:10,855 [INFO] Received request: GET /static/styles.css
+2026-03-18 11:23:11,183 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:13,216 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:15,200 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:17,161 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:19,087 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:21,022 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:22,971 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:26,347 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:28,291 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:30,199 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:32,149 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:34,102 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:36,003 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:37,927 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:39,904 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:41,586 [INFO] Received request: GET /logs
+2026-03-18 11:23:41,702 [INFO] Received request: GET /static/styles.css
+2026-03-18 11:23:41,705 [INFO] Received request: GET /static/dashboard.js
+2026-03-18 11:23:41,982 [INFO] Received request: GET /api/logs/dev
+2026-03-18 11:23:44,476 [INFO] Received request: GET /
+2026-03-18 11:23:44,479 [INFO] Serving dashboard index
+2026-03-18 11:23:44,587 [INFO] Received request: GET /static/styles.css
+2026-03-18 11:23:44,589 [INFO] Received request: GET /static/dashboard.js
+2026-03-18 11:23:45,033 [INFO] Received request: GET /api/deployments
+2026-03-18 11:23:46,965 [INFO] Received request: GET /api/deployments

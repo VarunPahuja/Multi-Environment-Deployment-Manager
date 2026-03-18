@@ -52,7 +52,7 @@ docker-compose up --build
 ## 6. Usage
 Once the containers are running via Docker Compose, you can access the application's different environments on their respective ports. Each environment runs the exact same code but behaves differently based on injected environment variables.
 
-- **Development**: [http://localhost:8080/](http://localhost:8080/)
+- **Development**: [http://localhost:8000/](http://localhost:8000/)
 - **Staging**: [http://localhost:8081/](http://localhost:8081/)
 - **Production**: [http://localhost:8082/](http://localhost:8082/)
 

@@ -138,7 +138,7 @@
                         </div>
                         <div class="space-y-3">
                             <button @click="action('dev', 'deploy')" :disabled="environments.dev?.status !== 'healthy'" class="w-full bg-cyan-900/30 hover:bg-cyan-800/50 text-cyan-400 text-xs font-bold py-2 px-4 rounded border border-cyan-800/50 transition-all disabled:opacity-50">
-                                [Deploy to Staging]
+                                [Deploy Development]
                             </button>
                             <button @click="action('dev', 'restart')" :disabled="environments.dev?.status !== 'healthy'" class="w-full bg-[#0d1117] hover:bg-gray-800 text-gray-300 text-xs font-bold py-2 px-4 rounded border border-gray-700 transition-all disabled:opacity-50">
                                 [Restart Environment]
@@ -170,7 +170,7 @@
                         </div>
                         <div class="space-y-3">
                             <button @click="action('staging', 'deploy')" :disabled="environments.staging?.status !== 'healthy'" class="w-full bg-purple-900/30 hover:bg-purple-800/50 text-purple-400 text-xs font-bold py-2 px-4 rounded border border-purple-800/50 transition-all disabled:opacity-50">
-                                [Deploy to Production]
+                                [Deploy Staging]
                             </button>
                             <button @click="action('staging', 'restart')" :disabled="environments.staging?.status !== 'healthy'" class="w-full bg-[#0d1117] hover:bg-gray-800 text-gray-300 text-xs font-bold py-2 px-4 rounded border border-gray-700 transition-all disabled:opacity-50">
                                 [Restart Environment]
@@ -201,6 +201,9 @@
                             </div>
                         </div>
                         <div class="space-y-3">
+                            <button @click="action('prod', 'deploy')" :disabled="environments.prod?.status !== 'healthy'" class="w-full bg-green-900/30 hover:bg-green-800/50 text-green-400 text-xs font-bold py-2 px-4 rounded border border-green-800/50 transition-all disabled:opacity-50">
+                                [Deploy Production]
+                            </button>
                             <button @click="action('prod', 'restart')" :disabled="environments.prod?.status !== 'healthy'" class="w-full bg-[#0d1117] hover:bg-gray-800 text-gray-300 text-xs font-bold py-2 px-4 rounded border border-gray-700 transition-all disabled:opacity-50">
                                 [Restart Environment]
                             </button>

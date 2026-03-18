@@ -17,12 +17,31 @@ try:
 except Exception as e:
     docker_client = None
 
-request_count = 0
+TRAFFIC_FILE = os.path.join(os.environ.get("DATA_DIR", "/app/data"), "traffic.json")
+
+def get_shared_traffic():
+    if not os.path.exists(TRAFFIC_FILE):
+        return 0
+    try:
+        with open(TRAFFIC_FILE, "r") as f:
+            return json.load(f).get("requests", 0)
+    except:
+        return 0
+
+def increment_shared_traffic():
+    count = get_shared_traffic() + 1
+    try:
+        with open(TRAFFIC_FILE, "w") as f:
+            json.dump({"requests": count}, f)
+    except:
+        pass
+    return count
 
 @app.before_request
 def count_requests():
-    global request_count
-    request_count += 1
+    if request.path not in ['/api/traffic', '/api/environments', '/health']:
+        count = increment_shared_traffic()
+        app.logger.info(f"Received request: {request.method} {request.path}")
 
 APP_ENV = os.environ.get("APP_ENV", "unknown")
 DATA_DIR = os.environ.get("DATA_DIR", "/app/data")
@@ -87,7 +106,7 @@ def health():
 
 @app.route("/api/traffic", methods=["GET"])
 def api_traffic():
-    return jsonify({"requests": request_count})
+    return jsonify({"requests": get_shared_traffic()})
 
 @app.route("/api/environments")
 def api_environments():
@@ -121,6 +140,13 @@ def internal_restart():
     os._exit(0)
     return jsonify({"status": "success"})
 
+def background_action(container):
+    time.sleep(1.0)
+    try:
+        container.restart()
+    except Exception as e:
+        app.logger.error(f"Background restart failed: {e}")
+
 @app.route("/api/restart/<env>", methods=["POST"])
 def api_restart(env):
     try:
@@ -135,7 +161,7 @@ def api_restart(env):
                 return jsonify({"status": "error", "message": f"Couldn't find container for env: {env}"}), 404
             
             container = containers[0]
-            container.restart()
+            threading.Thread(target=background_action, args=(container,)).start()
             return jsonify({"status": "success", "message": f"Restarted {env}"})
         else:
             return jsonify({"status": "error", "message": "Docker client unavailable"}), 500
@@ -165,7 +191,7 @@ def api_deploy(env):
                 return jsonify({"status": "error", "message": f"Couldn't find container for env: {env}"}), 404
             
             container = containers[0]
-            container.restart()
+            threading.Thread(target=background_action, args=(container,)).start()
             app.logger.info(f"[INFO] Deployment completed -> {env}")
             return jsonify({"status": "success", "message": f"Deployed to {env}"})
         else:
